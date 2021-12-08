@@ -1,2 +1,4 @@
-package tasks;public class Main {
+package tasks;
+
+public class Main {
 }
