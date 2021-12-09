@@ -11,6 +11,13 @@ public class CoffeeMachine {
     private int money = 550;
     private int disposableCups = 9;
 
+    public CoffeeMachine() {
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     private enum CoffeeType {
         ESPRESSO("1", 250, 0, 20, 1, 4),
         LATTE("2", 350, 20, 75, 1, 7),
@@ -32,7 +39,7 @@ public class CoffeeMachine {
             this.price = price;
         }
 
-        public static CoffeeType findByAction(String actionType) {
+        private static CoffeeType findByAction(String actionType) {
             return Arrays.stream(CoffeeType.values()).filter(s -> s.getActionType().equals(actionType)).findAny().orElse(null);
         }
 
@@ -59,13 +66,6 @@ public class CoffeeMachine {
         public int getCupsAmount() {
             return cupsAmount;
         }
-    }
-
-    public CoffeeMachine() {
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
     }
 
     public void remaining() {
