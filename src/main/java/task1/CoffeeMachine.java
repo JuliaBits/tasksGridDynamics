@@ -11,7 +11,6 @@ public class CoffeeMachine {
     private int money = 550;
     private int disposableCups = 9;
 
-
     private enum CoffeeType {
         ESPRESSO("1", 250, 0, 20, 1, 4),
         LATTE("2", 350, 20, 75, 1, 7),
@@ -24,7 +23,6 @@ public class CoffeeMachine {
         private final int cupsAmount;
         private final int price;
 
-
         CoffeeType(String actionType, int waterAmount, int milkAmount, int coffeeAmount, int cupsAmount, int price) {
             this.actionType = actionType;
             this.waterAmount = waterAmount;
@@ -33,7 +31,6 @@ public class CoffeeMachine {
             this.cupsAmount = cupsAmount;
             this.price = price;
         }
-
 
         public static CoffeeType findByAction(String actionType) {
             return Arrays.stream(CoffeeType.values()).filter(s -> s.getActionType().equals(actionType)).findAny().orElse(null);
@@ -62,9 +59,7 @@ public class CoffeeMachine {
         public int getCupsAmount() {
             return cupsAmount;
         }
-
     }
-
 
     public CoffeeMachine() {
     }
@@ -86,7 +81,7 @@ public class CoffeeMachine {
         money += order.getPrice();
     }
 
-    public boolean checkResources(CoffeeType order) {
+    public boolean isEnoughResources(CoffeeType order) {
         boolean result = false;
         if (coffeeLeft >= order.getCoffeeAmount() && waterLeft >= order.getWaterAmount() && disposableCups >= order.getCupsAmount()) {
             result = true;
@@ -114,7 +109,7 @@ public class CoffeeMachine {
             if (!action.equals("back")) {
                 CoffeeType order = CoffeeType.findByAction(action);
                 if (order != null) {
-                    if (checkResources(order)) {
+                    if (isEnoughResources(order)) {
                         makeCoffee(order);
                     }
                     break;
@@ -122,10 +117,8 @@ public class CoffeeMachine {
             } else {
                 break;
             }
-
         }
     }
-
 
     public void fill() {
         System.out.println("Write how many ml of water you want to add: ");
@@ -166,7 +159,6 @@ public class CoffeeMachine {
                     System.out.println("Check your input!");
                     break;
             }
-
         }
     }
 }
