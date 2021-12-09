@@ -81,7 +81,7 @@ public class CoffeeMachine {
         money += order.getPrice();
     }
 
-    public boolean isEnoughResources(CoffeeType order) {
+    public boolean areEnoughResources(CoffeeType order) {
         boolean result = false;
         if (coffeeLeft >= order.getCoffeeAmount() && waterLeft >= order.getWaterAmount() && disposableCups >= order.getCupsAmount()) {
             result = true;
@@ -109,7 +109,7 @@ public class CoffeeMachine {
             if (!action.equals("back")) {
                 CoffeeType order = CoffeeType.findByAction(action);
                 if (order != null) {
-                    if (isEnoughResources(order)) {
+                    if (areEnoughResources(order)) {
                         makeCoffee(order);
                     }
                     break;
