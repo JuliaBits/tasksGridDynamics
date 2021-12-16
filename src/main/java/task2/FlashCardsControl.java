@@ -4,16 +4,47 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class FlashCardsControl {
-    public static String fileNotFound = "File not found.";
-    public static String fileName = "File name:";
+    public final static String FILE_NOT_FOUND = "File not found.";
+    public final static String FILE_NAME = "File name:";
     private final Scanner scanner = new Scanner(System.in);
     private final List<Flashcard> flashcards;
     private final List<String> logs;
+
+    private enum Action {
+        ADD("add"),
+        REMOVE("remove"),
+        IMPORT("import"),
+        EXPORT("export"),
+        ASK("ask"),
+        EXIT("exit"),
+        LOG("log"),
+        HARDEST_CARD("hardest card"),
+        RESET_STATS("reset stats");
+
+        private final String option;
+
+        Action(String option) {
+            this.option = option;
+        }
+
+        private static Action findByOption(String option) {
+            return Arrays.stream(Action.values()).filter(s -> s.getOption().equals(option)).findAny().orElse(null);
+        }
+
+        public String getOption() {
+            return option;
+        }
+
+        public static String actionsToString() {
+            return Arrays.stream(Action.values()).map(Action::getOption).collect(Collectors.joining(", "));
+        }
+    }
 
     public FlashCardsControl() {
         this.flashcards = new ArrayList<>();
@@ -22,25 +53,23 @@ public class FlashCardsControl {
 
     void start() {
         while (true) {
-            printMessage("\nInput the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
-            String option = getInput().toLowerCase();
-            switch (option) {
-                case "add" -> addFlashcard();
-                case "remove" -> removeFlashcard();
-                case "import" -> importFromFile();
-                case "export" -> exportToFile();
-                case "ask" -> ask();
-                case "exit" -> {
+            printMessage("\nInput the action (" + Action.actionsToString() + "):");
+            switch (Action.findByOption(getInput().toLowerCase())) {
+                case ADD -> addFlashcard();
+                case REMOVE -> removeFlashcard();
+                case IMPORT -> importFromFile();
+                case EXPORT -> exportToFile();
+                case ASK -> ask();
+                case EXIT -> {
                     printMessage("Bye bye!");
                     scanner.close();
                     exportWhileExit("file.txt");
                     return;
                 }
-                case "log" -> saveLog();
-                case "hardest card" -> printHardestCard();
-                case "reset stats" -> resetStats();
-                default -> {
-                }
+                case LOG -> saveLog();
+                case HARDEST_CARD -> printHardestCard();
+                case RESET_STATS -> resetStats();
+                default -> System.out.println("Wrong input!");
             }
         }
     }
@@ -79,7 +108,7 @@ public class FlashCardsControl {
     }
 
     private void saveLog() {
-        printMessage(fileName);
+        printMessage(FILE_NAME);
         String fileName = getInput();
         File file = new File(fileName);
         try (PrintWriter printWriter = new PrintWriter(file)) {
@@ -88,12 +117,12 @@ public class FlashCardsControl {
             }
             printMessage("The log has been saved.");
         } catch (FileNotFoundException e) {
-            printMessage(fileNotFound);
+            printMessage(FILE_NOT_FOUND);
         }
     }
 
     private void exportToFile() {
-        printMessage(fileName);
+        printMessage(FILE_NAME);
         String fileName = getInput();
         exportWhileExit(fileName);
     }
@@ -110,12 +139,12 @@ public class FlashCardsControl {
             String output = String.format("%d cards have been saved.", n);
             printMessage(output);
         } catch (FileNotFoundException e) {
-            printMessage(fileNotFound);
+            printMessage(FILE_NOT_FOUND);
         }
     }
 
     public void importFromFile() {
-        printMessage(fileName);
+        printMessage(FILE_NAME);
         String fileName = getInput();
         importWithArgs(fileName);
     }
@@ -142,7 +171,7 @@ public class FlashCardsControl {
             String output = String.format("%d cards have been loaded.", n);
             printMessage(output);
         } catch (FileNotFoundException e) {
-            printMessage(fileNotFound);
+            printMessage(FILE_NOT_FOUND);
         }
 
     }
@@ -184,7 +213,7 @@ public class FlashCardsControl {
     }
 
     private void ask() {
-        if (flashcards.size() > 0) {
+        if (!flashcards.isEmpty()) {
             printMessage("How many times to ask?");
             int times = Integer.parseInt(getInput());
             int j = 0;
