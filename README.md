@@ -14,6 +14,6 @@ Contacts
 In this project, I worked on a program to create contacts (like on the mobile phone) and search for people or organizations by name.
 
 Task4
-Encription/Decription
+Encryption/Decryption
 
-This project is about encription and decription of data. You can choose Ceasar or Unicode mode to encrypt or decript the input or file.
+This project is about encryption and decryption of data. You can choose Ceasar or Unicode mode to encrypt or decrypt the input or file.
