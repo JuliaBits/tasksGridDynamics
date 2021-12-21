@@ -10,8 +10,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class FlashCardsControl {
-    public final static String FILE_NOT_FOUND = "File not found.";
-    public final static String FILE_NAME = "File name:";
+    private static final String FILE_NOT_FOUND = "File not found.";
+    private static final String FILE_NAME = "File name:";
     private final Scanner scanner = new Scanner(System.in);
     private final List<Flashcard> flashcards;
     private final List<String> logs;
@@ -25,7 +25,8 @@ public class FlashCardsControl {
         EXIT("exit"),
         LOG("log"),
         HARDEST_CARD("hardest card"),
-        RESET_STATS("reset stats");
+        RESET_STATS("reset stats"),
+        UNKNOWN("unknown");
 
         private final String option;
 
@@ -34,7 +35,7 @@ public class FlashCardsControl {
         }
 
         private static Action findByOption(String option) {
-            return Arrays.stream(Action.values()).filter(s -> s.getOption().equals(option)).findAny().orElse(null);
+            return Arrays.stream(Action.values()).filter(s -> s.getOption().equals(option)).findAny().orElse(UNKNOWN);
         }
 
         public String getOption() {

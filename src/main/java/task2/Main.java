@@ -2,8 +2,8 @@ package task2;
 
 
 public class Main {
-    final static String IMPORT = "-import";
-    final static String EXPORT = "-export";
+    private static final String IMPORT = "-import";
+    private static final String EXPORT = "-export";
 
     public static void main(String[] args) {
         FlashCardsControl flashCards = new FlashCardsControl();
