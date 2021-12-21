@@ -76,9 +76,10 @@ public class EncryptionController {
         File file = new File(pathToRead);
         StringBuilder stringBuilder = new StringBuilder();
         if (file.exists()) {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNext()) {
-                stringBuilder.append(scanner.nextLine());
+            try (Scanner scanner = new Scanner(file)) {
+                while (scanner.hasNext()) {
+                    stringBuilder.append(scanner.nextLine());
+                }
             }
         } else {
             System.out.println("Error, such file does not exist!");
