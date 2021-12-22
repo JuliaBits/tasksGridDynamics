@@ -91,7 +91,7 @@ public class EncryptionController {
         buffer = new StringBuffer();
         for (char current : messageArray) {
             for (int j = 0; j < 127; j++) {
-                if ((int) current == j) {
+                if (current == j) {
                     char resultChar;
                     int numberByASCII;
                     if (shift > j) {
@@ -113,7 +113,7 @@ public class EncryptionController {
         System.out.println(messageArray);
         for (char current : messageArray) {
             for (int j = 0; j < 127; j++) {
-                if ((int) current == j) {
+                if (current == j) {
                     char resultChar;
                     if (j + shift > 127) {
                         int numberByASCII = shift - (127 - j);
@@ -139,7 +139,7 @@ public class EncryptionController {
         for (char current : messageArray) {
             if (Character.isAlphabetic(current)) {
                 for (int j = 0; j < ABC.length() * 2 - 1; j++) {
-                    if ((int) current == abcCharsLowerCase[j]) {
+                    if (current == abcCharsLowerCase[j]) {
                         char resultChar;
                         if (shift > j) {
                             resultChar = abcCharsLowerCase[ABC.length() - (shift - j)];
@@ -151,7 +151,7 @@ public class EncryptionController {
                     }
                 }
                 for (int n = 0; n < ABC.length(); n++) {
-                    if ((int) current == abcCharsUpperCase[n]) {
+                    if (current == abcCharsUpperCase[n]) {
                         char resultChar;
                         if (shift > n) {
                             resultChar = abcCharsUpperCase[upperAlphabet.length() - (shift - n)];
@@ -179,7 +179,7 @@ public class EncryptionController {
         for (char current : messageArray) {
             if (Character.isAlphabetic(current)) {
                 for (int j = 0; j < ABC.length(); j++) {
-                    if ((int) current == abcCharsLowerCase[j]) {
+                    if (current == abcCharsLowerCase[j]) {
                         char resultChar;
                         if (j + shift > ABC.length()) {
                             resultChar = abcCharsLowerCase[shift - (ABC.length() - j)];
@@ -191,7 +191,7 @@ public class EncryptionController {
                     }
                 }
                 for (int n = 0; n < ABC.length(); n++) {
-                    if ((int) current == abcCharsUpperCase[n]) {
+                    if (current == abcCharsUpperCase[n]) {
                         char resultChar;
                         if (n + shift > ABC.length()) {
                             resultChar = abcCharsUpperCase[shift - (upperAlphabet.length() - n)];
