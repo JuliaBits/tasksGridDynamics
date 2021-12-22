@@ -170,7 +170,7 @@ public abstract class Record {
         if (!records.isEmpty()) {
             printRecords(records);
             actionsWithRecord();
-        }else{
+        } else {
             System.out.println("The Phone Book is empty. Please, add new contact.");
         }
     }
