@@ -47,19 +47,19 @@ public abstract class Record {
     public void search() {
         System.out.println("Enter search query:");
         String searchedQuery = sc.nextLine();
-        Pattern pattern = Pattern.compile("(?i).*" + searchedQuery + ".*");
         List<Record> foundRecords = records.stream()
-                .filter(record -> pattern.matcher(record.toString()).find() || pattern.matcher(record.getNumber()).find())
+                .filter(record -> Pattern.compile("(?i).*" + searchedQuery + ".*").matcher(record.toString()).find() || Pattern.compile("(?i).*" + searchedQuery + ".*").matcher(record.getNumber()).find())
                 .collect(Collectors.toList());
+
         System.out.println("Found " + foundRecords.size() + " results:");
-        if (!foundRecords.isEmpty()) {
+        if (foundRecords.size() > 0) {
             printRecords(foundRecords);
             actionsWithRecord(foundRecords);
         }
     }
 
     public void actionsWithRecord(List<Record> foundRecords) {
-        System.out.println("\nEnter action (number of record, back, again):");
+        System.out.println("\nEnter action ([number], back, again):");
         String input = sc.nextLine();
         Pattern pattern = Pattern.compile("\\s*[0-" + foundRecords.size() + "]\\s*");
         Matcher matcher = pattern.matcher(input);
@@ -131,7 +131,7 @@ public abstract class Record {
 
     public Record selectRecord() {
         while (true) {
-            System.out.println("Enter action (number of record, back):");
+            System.out.println("Enter action ([number], back):");
             String input = sc.nextLine();
             if (input.equals("back")) {
                 break;
@@ -146,7 +146,7 @@ public abstract class Record {
     }
 
     public void editRecord(Record record) {
-        if (records.isEmpty()) {
+        if (records.size() == 0) {
             System.out.println("No records to edit!");
         } else {
             if (record.getClass() == Organization.class) {
@@ -170,8 +170,6 @@ public abstract class Record {
         if (!records.isEmpty()) {
             printRecords(records);
             actionsWithRecord();
-        }else{
-            System.out.println("The Phone Book is empty. Please, add new contact.");
         }
     }
 
