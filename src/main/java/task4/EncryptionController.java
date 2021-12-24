@@ -25,14 +25,14 @@ public class EncryptionController {
                 message = readFromFile(pathToRead);
                 char[] messageArray = message.toCharArray();
                 if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
-                    result = shiftingEncription(shift, messageArray);
+                    result = shiftingEncryption(shift, messageArray);
                 } else {
                     result = shiftingDecryption(shift, messageArray);
                 }
             } else {
                 char[] messageArray = message.toCharArray();
                 if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
-                    result = shiftingEncription(shift, messageArray);
+                    result = shiftingEncryption(shift, messageArray);
                 } else {
                     result = shiftingDecryption(shift, messageArray);
                 }
@@ -140,24 +140,14 @@ public class EncryptionController {
             if (Character.isAlphabetic(current)) {
                 for (int j = 0; j < ABC.length() * 2 - 1; j++) {
                     if (current == abcCharsLowerCase[j]) {
-                        char resultChar;
-                        if (shift > j) {
-                            resultChar = abcCharsLowerCase[ABC.length() - (shift - j)];
-                        } else {
-                            resultChar = abcCharsLowerCase[j - shift];
-                        }
+                        char resultChar = shift > j ? abcCharsLowerCase[ABC.length() - (shift - j)] : abcCharsLowerCase[j - shift];
                         buffer.append(resultChar);
                         break;
                     }
                 }
                 for (int n = 0; n < ABC.length(); n++) {
                     if (current == abcCharsUpperCase[n]) {
-                        char resultChar;
-                        if (shift > n) {
-                            resultChar = abcCharsUpperCase[upperAlphabet.length() - (shift - n)];
-                        } else {
-                            resultChar = abcCharsUpperCase[n - shift];
-                        }
+                        char resultChar = shift > n ? abcCharsUpperCase[upperAlphabet.length() - (shift - n)] : abcCharsLowerCase[n - shift];
                         buffer.append(resultChar);
                         break;
                     }
@@ -169,7 +159,7 @@ public class EncryptionController {
         return buffer.toString();
     }
 
-    private String shiftingEncription(int shift, char[] messageArray) {
+    private String shiftingEncryption(int shift, char[] messageArray) {
         buffer = new StringBuffer();
         System.out.println(messageArray);
         String upperAlphabet = ABC.toUpperCase(Locale.ROOT);
@@ -180,24 +170,14 @@ public class EncryptionController {
             if (Character.isAlphabetic(current)) {
                 for (int j = 0; j < ABC.length(); j++) {
                     if (current == abcCharsLowerCase[j]) {
-                        char resultChar;
-                        if (j + shift > ABC.length()) {
-                            resultChar = abcCharsLowerCase[shift - (ABC.length() - j)];
-                        } else {
-                            resultChar = abcCharsLowerCase[j + shift];
-                        }
+                        char resultChar = j + shift > ABC.length() ? abcCharsLowerCase[shift - (ABC.length() - j)] : abcCharsLowerCase[j + shift];
                         buffer.append(resultChar);
                         break;
                     }
                 }
                 for (int n = 0; n < ABC.length(); n++) {
                     if (current == abcCharsUpperCase[n]) {
-                        char resultChar;
-                        if (n + shift > ABC.length()) {
-                            resultChar = abcCharsUpperCase[shift - (upperAlphabet.length() - n)];
-                        } else {
-                            resultChar = abcCharsUpperCase[n + shift];
-                        }
+                        char resultChar = n + shift > ABC.length() ? abcCharsUpperCase[shift - (upperAlphabet.length() - n)] : abcCharsUpperCase[n + shift];
                         buffer.append(resultChar);
                         break;
                     }
