@@ -26,7 +26,10 @@ public class Person extends Record {
         }
 
         private static Gender findByGender(String genderValue) {
-            return Arrays.stream(Gender.values()).filter(s -> s.getGenderValue().equals(genderValue)).findAny().orElse(UNKNOWN);
+            return Arrays.stream(Gender.values())
+                    .filter(s -> s.getGenderValue().equals(genderValue))
+                    .findAny()
+                    .orElse(UNKNOWN);
         }
 
         public String getGenderValue() {
