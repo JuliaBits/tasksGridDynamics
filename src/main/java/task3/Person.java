@@ -1,12 +1,41 @@
 package task3;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
 
 public class Person extends Record {
     private String name;
     private String surname;
     private String birthDate;
     private String gender;
+    private static final String DATE_FORMAT = "dd-MM-yyyy";
+
+    private enum Gender {
+        MALE("M"),
+        FEMALE("F"),
+        UNKNOWN("U");
+
+        private final String genderValue;
+
+        Gender(String gender) {
+            this.genderValue = gender;
+        }
+
+        private static Gender findByGender(String genderValue) {
+            return Arrays.stream(Gender.values())
+                    .filter(s -> s.getGenderValue().equals(genderValue))
+                    .findAny()
+                    .orElse(UNKNOWN);
+        }
+
+        public String getGenderValue() {
+            return genderValue;
+        }
+    }
 
     @Override
     public Person createRecord() {
@@ -34,12 +63,6 @@ public class Person extends Record {
     @Override
     public String toString() {
         return name + " " + surname;
-    }
-
-    public void saveUpdatedRecord(int indexOfRecord, Person old, Person updatedPerson) {
-        records.remove(old);
-        records.add(indexOfRecord, updatedPerson);
-        System.out.println("Saved");
     }
 
     public void edit(Record record) {
@@ -72,6 +95,19 @@ public class Person extends Record {
         System.out.println("Saved!");
     }
 
+    private boolean isValidDate(String date) {
+        Date today = new Date();
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            dateFormat.setLenient(false);
+            dateFormat.parse(date);
+            Date birthDate = dateFormat.parse(date);
+            return birthDate.before(today);
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -91,7 +127,7 @@ public class Person extends Record {
     }
 
     public void setBirthDate(String birthDate) {
-        if (birthDate != null || !birthDate.equals(" ")) {
+        if (isValidDate(birthDate)) {
             this.birthDate = birthDate;
         } else {
             System.out.println("Bad birth date!");
@@ -105,7 +141,8 @@ public class Person extends Record {
     }
 
     public void setGender(String gender) {
-        if (gender.equals("M") || gender.equals("F")) {
+        Gender foundGender = Gender.findByGender(gender);
+        if (!foundGender.equals(Gender.UNKNOWN)) {
             this.gender = gender;
         } else {
             System.out.println("Bad gender!");
