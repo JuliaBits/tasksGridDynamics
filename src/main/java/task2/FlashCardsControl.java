@@ -18,14 +18,14 @@ public class FlashCardsControl {
 
     private enum Action {
         ADD("add"),
+        ASK("ask"),
         REMOVE("remove"),
         IMPORT("import"),
         EXPORT("export"),
-        ASK("ask"),
-        EXIT("exit"),
-        LOG("log"),
         HARDEST_CARD("hardest card"),
         RESET_STATS("reset stats"),
+        LOG("log"),
+        EXIT("exit"),
         UNKNOWN("unknown");
 
         private final String option;
