@@ -43,7 +43,7 @@ public class FlashCardsControl {
         }
 
         public static String actionsToString() {
-            return Arrays.stream(Action.values()).map(Action::getOption).collect(Collectors.joining(", "));
+            return Arrays.stream(Action.values()).map(Action::getOption).filter(Option ->!Option.equals("unknown")).collect(Collectors.joining(", "));
         }
     }
 
@@ -174,7 +174,6 @@ public class FlashCardsControl {
         } catch (FileNotFoundException e) {
             printMessage(FILE_NOT_FOUND);
         }
-
     }
 
     private void removeFlashcard() {
@@ -233,8 +232,8 @@ public class FlashCardsControl {
                     if (tempTerm != null) {
                         String output1 = String.format(
                                 "Wrong. The right answer is \"%s\", but your definition is correct for \"%s\".",
-                                flashcards.get(i).getDefinition(), tempTerm);
-                        flashcards.get(i).addWrongAnswer();
+                                flashcards.get(j).getDefinition(), tempTerm);
+                        flashcards.get(j).addWrongAnswer();
                         printMessage(output1);
                     } else {
                         String output2 = String.format("Wrong. The right answer is \"%s\".",
@@ -247,7 +246,6 @@ public class FlashCardsControl {
             }
         } else {
             System.out.println("Add cards, please.");
-
         }
     }
 
