@@ -15,8 +15,7 @@ public enum Action {
     EXIT("exit"),
     UNKNOWN("unknown");
 
-    private final String option;
-
+    public final String option;
     Action(String option) {
         this.option = option;
     }

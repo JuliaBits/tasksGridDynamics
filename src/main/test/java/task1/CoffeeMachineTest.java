@@ -102,11 +102,10 @@ public class CoffeeMachineTest {
         coffeeMachine.start();
 
         String[] lines = baos.toString().split(System.lineSeparator());
-        String first = lines[lines.length - 4];
-        String second = lines[lines.length - 3];
-        String third = lines[lines.length - 2];
-        String fourth = lines[lines.length - 1];
-        String actual = first + "\n" + second + "\n" + third + "\n" + fourth;
+        String first = lines[lines.length - 3];
+        String second = lines[lines.length - 2];
+        String third = lines[lines.length - 1];
+        String actual = first + "\n" + second + "\n" + third;
         assertEquals(expected, actual);
     }
 

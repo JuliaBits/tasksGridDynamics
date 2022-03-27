@@ -45,8 +45,12 @@ public class FlashCardsControl {
     }
 
     private void resetStats() {
-        flashcards.forEach(o -> o.setWrongAnswers(0));
-        printMessage("Card statistics have been reset.");
+        if(!flashcards.isEmpty()) {
+            flashcards.forEach(o -> o.setWrongAnswers(0));
+            printMessage("Card statistics have been reset.");
+        }else{
+            printMessage("You don`t have flashcards");
+        }
     }
 
     private void printHardestCard() {

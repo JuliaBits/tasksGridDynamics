@@ -1,0 +1,6 @@
+France:Paris:0
+Armenia:Yerevan:0
+Austria:Vienna:0
+Egypt:Cairo:0
+Georgia:Tbilisi:0
+Germany:Berlin:0
