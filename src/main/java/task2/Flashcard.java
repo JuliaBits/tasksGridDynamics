@@ -30,5 +30,4 @@ public class Flashcard {
     public void setWrongAnswers(int wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
     }
-
 }

@@ -16,37 +16,6 @@ public class FlashCardsControl {
     private final List<Flashcard> flashcards;
     private final List<String> logs;
 
-    private enum Action {
-        ADD("add"),
-        ASK("ask"),
-        REMOVE("remove"),
-        IMPORT("import"),
-        EXPORT("export"),
-        HARDEST_CARD("hardest card"),
-        RESET_STATS("reset stats"),
-        LOG("log"),
-        EXIT("exit"),
-        UNKNOWN("unknown");
-
-        private final String option;
-
-        Action(String option) {
-            this.option = option;
-        }
-
-        private static Action findByOption(String option) {
-            return Arrays.stream(Action.values()).filter(s -> s.getOption().equals(option)).findAny().orElse(UNKNOWN);
-        }
-
-        public String getOption() {
-            return option;
-        }
-
-        public static String actionsToString() {
-            return Arrays.stream(Action.values()).map(Action::getOption).filter(Option ->!Option.equals("unknown")).collect(Collectors.joining(", "));
-        }
-    }
-
     public FlashCardsControl() {
         this.flashcards = new ArrayList<>();
         this.logs = new ArrayList<>();
@@ -88,7 +57,6 @@ public class FlashCardsControl {
                 max = flashcard.getWrongAnswers();
             }
         }
-
         if (max == 0) {
             printMessage("There are no cards with errors.");
         } else {

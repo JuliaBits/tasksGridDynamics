@@ -1,6 +1,5 @@
 package task1;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CoffeeMachine {
@@ -14,66 +13,44 @@ public class CoffeeMachine {
     public CoffeeMachine() {
     }
 
+    public CoffeeMachine(int coffeeLeft, int waterLeft, int milkLeft, int money, int disposableCups) {
+        this.coffeeLeft = coffeeLeft;
+        this.waterLeft = waterLeft;
+        this.milkLeft = milkLeft;
+        this.money = money;
+        this.disposableCups = disposableCups;
+    }
+
+    public int getCoffeeLeft() {
+        return coffeeLeft;
+    }
+
+    public int getWaterLeft() {
+        return waterLeft;
+    }
+
+    public int getMilkLeft() {
+        return milkLeft;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+    public int getDisposableCups() {
+        return disposableCups;
+    }
+
+
     public void setMoney(int money) {
         this.money = money;
     }
 
-    private enum CoffeeType {
-        ESPRESSO("1", 250, 0, 20, 1, 4),
-        LATTE("2", 350, 20, 75, 1, 7),
-        CAPPUCCINO("3", 200, 12, 100, 1, 6);
-
-        private final String actionType;
-        private final int waterAmount;
-        private final int milkAmount;
-        private final int coffeeAmount;
-        private final int cupsAmount;
-        private final int price;
-
-        CoffeeType(String actionType, int waterAmount, int milkAmount, int coffeeAmount, int cupsAmount, int price) {
-            this.actionType = actionType;
-            this.waterAmount = waterAmount;
-            this.milkAmount = milkAmount;
-            this.coffeeAmount = coffeeAmount;
-            this.cupsAmount = cupsAmount;
-            this.price = price;
-        }
-
-        private static CoffeeType findByAction(String actionType) {
-            return Arrays.stream(CoffeeType.values()).filter(s -> s.getActionType().equals(actionType)).findAny().orElse(null);
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public String getActionType() {
-            return actionType;
-        }
-
-        public int getWaterAmount() {
-            return waterAmount;
-        }
-
-        public int getMilkAmount() {
-            return milkAmount;
-        }
-
-        public int getCoffeeAmount() {
-            return coffeeAmount;
-        }
-
-        public int getCupsAmount() {
-            return cupsAmount;
-        }
-    }
-
-    public void remaining() {
+    private void remaining() {
         System.out.println("The coffee machine has: \n" + waterLeft + " ml of water\n" + milkLeft + " ml of milk");
         System.out.println(coffeeLeft + " g of coffee beans\n" + disposableCups + " disposable cups\n" + money + "$ of money");
     }
 
-    public void makeCoffee(CoffeeType order) {
+    private void makeCoffee(CoffeeType order) {
         System.out.println("I have enough resources, making you a coffee! ");
         coffeeLeft -= order.getCoffeeAmount();
         waterLeft -= order.getWaterAmount();
@@ -81,7 +58,7 @@ public class CoffeeMachine {
         money += order.getPrice();
     }
 
-    public boolean areEnoughResources(CoffeeType order) {
+    private boolean areEnoughResources(CoffeeType order) {
         boolean result = false;
         if (coffeeLeft >= order.getCoffeeAmount() && waterLeft >= order.getWaterAmount() && disposableCups >= order.getCupsAmount()) {
             result = true;
@@ -102,7 +79,7 @@ public class CoffeeMachine {
         return result;
     }
 
-    public void buy() {
+    private void buy() {
         while (true) {
             System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: ");
             String action = sc.next();
@@ -120,7 +97,7 @@ public class CoffeeMachine {
         }
     }
 
-    public void fill() {
+    private void fill() {
         System.out.println("Write how many ml of water you want to add: ");
         waterLeft += sc.nextInt();
         System.out.println("Write how many ml of milk you want to add:");
@@ -131,7 +108,7 @@ public class CoffeeMachine {
         disposableCups += sc.nextInt();
     }
 
-    public void take() {
+    private void take() {
         System.out.println("I gave you $" + money);
         setMoney(0);
     }
