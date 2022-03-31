@@ -92,8 +92,7 @@ public class CoffeeMachineTest {
 
         String expected = "Sorry, not enough coffee!\n" +
                 "Sorry, not enough water!\n" +
-                "Sorry, not enough cups!\n" +
-                "Write action (buy, fill, take, remaining, exit): ";
+                "Sorry, not enough cups!";
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(baos);
         System.setOut(printStream);
@@ -102,9 +101,9 @@ public class CoffeeMachineTest {
         coffeeMachine.start();
 
         String[] lines = baos.toString().split(System.lineSeparator());
-        String first = lines[lines.length - 3];
-        String second = lines[lines.length - 2];
-        String third = lines[lines.length - 1];
+        String first = lines[lines.length - 4];
+        String second = lines[lines.length - 3];
+        String third = lines[lines.length - 2];
         String actual = first + "\n" + second + "\n" + third;
         assertEquals(expected, actual);
     }

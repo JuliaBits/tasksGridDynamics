@@ -8,30 +8,29 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class EncryptionController {
-    private EncryptionMode encryptionMode = EncryptionMode.ENCRYPTION;
-    private String key = " ";
-    private String message = " ";
-    private String pathToWrite = "";
-    private String pathToRead = "";
-    private Algorithm algorithm;
+    private EncryptionMode encryptionMode;
+    private String key;
+    private String message;
+    private String pathToWrite;
+    private String pathToRead;
     private StringBuffer buffer;
     private static final String ABC = "abcdefghijklmnopqrstuvwxyz";
 
-    public void encryptOrDecrypt(String message, String key) throws IOException {
+    public String encryptOrDecrypt(String message, String key, Algorithm algorithm, String mode) throws IOException {
         int shift = Integer.parseInt(key);
         String result;
         if (algorithm.equals(Algorithm.SHIFT)) {
             if (!pathToRead.equals("")) {
                 message = readFromFile(pathToRead);
                 char[] messageArray = message.toCharArray();
-                if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
+                if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
                     result = shiftingEncryption(shift, messageArray);
                 } else {
                     result = shiftingDecryption(shift, messageArray);
                 }
             } else {
                 char[] messageArray = message.toCharArray();
-                if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
+                if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
                     result = shiftingEncryption(shift, messageArray);
                 } else {
                     result = shiftingDecryption(shift, messageArray);
@@ -41,14 +40,14 @@ public class EncryptionController {
             if (!pathToRead.equals("")) {
                 message = readFromFile(pathToRead);
                 char[] messageArray = message.toCharArray();
-                if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
+                if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
                     result = unicodeEncryption(shift, messageArray);
                 } else {
                     result = unicodeDecryption(shift, messageArray);
                 }
             } else {
                 char[] messageArray = message.toCharArray();
-                if (EncryptionMode.ENCRYPTION.equals(getEncryptionMode())) {
+                if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
                     result = unicodeEncryption(shift, messageArray);
                 } else {
                     result = unicodeDecryption(shift, messageArray);
@@ -57,9 +56,8 @@ public class EncryptionController {
         }
         if (!pathToWrite.equals("")) {
             writeToFile(pathToWrite, result);
-        } else {
-            System.out.println(result);
         }
+        return result;
     }
 
     private void writeToFile(String pathToWrite, String message) throws IOException {
@@ -187,41 +185,5 @@ public class EncryptionController {
             }
         }
         return buffer.toString();
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setPathToWrite(String pathToWrite) {
-        this.pathToWrite = pathToWrite;
-    }
-
-    public void setPathToRead(String pathToRead) {
-        this.pathToRead = pathToRead;
-    }
-
-    public void setAlgorithm(String algorithm) {
-        this.algorithm = Algorithm.findByAlgVal(algorithm);
-    }
-
-    public EncryptionMode getEncryptionMode() {
-        return encryptionMode;
-    }
-
-    public void setEncryptionMode(EncryptionMode encryptionMode) {
-        this.encryptionMode = encryptionMode;
     }
 }

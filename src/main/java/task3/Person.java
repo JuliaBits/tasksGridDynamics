@@ -37,7 +37,6 @@ public class Person extends Record {
         }
     }
 
-    @Override
     public Person createRecord() {
         Person newPerson = new Person();
         newPerson.setName();
@@ -108,17 +107,10 @@ public class Person extends Record {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public void setName() {
         System.out.println("Enter name:");
         this.setName(sc.nextLine());
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public void setSurname() {
@@ -153,5 +145,13 @@ public class Person extends Record {
     public void setGender() {
         System.out.println("Enter gender (M, F):");
         this.setGender(sc.nextLine());
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }

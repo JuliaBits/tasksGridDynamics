@@ -6,7 +6,6 @@ public class Organization extends Record {
     private String orgName;
     private String address;
 
-    @Override
     public Organization createRecord() {
         Organization newOrganization = new Organization();
         newOrganization.setOrgName();
@@ -63,6 +62,14 @@ public class Organization extends Record {
     public void setAddress() {
         System.out.println("Enter address:");
         this.setAddress(sc.nextLine());
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override

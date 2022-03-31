@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public abstract class Record {
+public class Record {
     private String number;
     private LocalDateTime created;
     private LocalDateTime lastEdit;
@@ -69,8 +69,6 @@ public abstract class Record {
             actionsEditDeleteMenu(foundRecords.get(indexOfRecord - 1));
         } else if (input.equals("again")) {
             search();
-        } else if (input.equals("back")) {
-            start();
         }
     }
 
@@ -115,8 +113,6 @@ public abstract class Record {
         }
     }
 
-    public abstract Record createRecord();
-
     public void remove() {
         if (records.isEmpty()) {
             System.out.println("No records to remove!");
@@ -134,7 +130,7 @@ public abstract class Record {
             System.out.println("Enter action (number of record, back):");
             String input = sc.nextLine();
             if (input.equals("back")) {
-                break;
+                return null;
             } else {
                 if (isValidIndex(input)) {
                     int indexOfRecord = Integer.parseInt(input) - 1;
@@ -142,24 +138,18 @@ public abstract class Record {
                 }
             }
         }
-        return null;
     }
 
     public void editRecord(Record record) {
-        if (records.isEmpty()) {
-            System.out.println("No records to edit!");
-        } else {
-            if (record.getClass() == Organization.class) {
-                Organization toUpdate = (Organization) record;
-                toUpdate.edit(record);
-                info(record);
-            } else if (record.getClass() == Person.class) {
-                Person toUpdate = (Person) record;
-                toUpdate.edit(record);
-                info(record);
-            }
+        if (record.getClass() == Organization.class) {
+            Organization toUpdate = (Organization) record;
+            toUpdate.edit(record);
+            info(record);
+        } else if (record.getClass() == Person.class) {
+            Person toUpdate = (Person) record;
+            toUpdate.edit(record);
+            info(record);
         }
-        actionsEditDeleteMenu(record);
     }
 
     public void count() {
@@ -177,8 +167,10 @@ public abstract class Record {
 
     public void actionsWithRecord() {
         Record current = selectRecord();
-        info(current);
-        actionsEditDeleteMenu(current);
+        if (current != null) {
+            info(current);
+            actionsEditDeleteMenu(current);
+        }
     }
 
     public void printRecords(List<Record> list) {
@@ -229,6 +221,4 @@ public abstract class Record {
     public void setLastEdit(LocalDateTime lastEdit) {
         this.lastEdit = created;
     }
-
-    public abstract String toString();
 }
