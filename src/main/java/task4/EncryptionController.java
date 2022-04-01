@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class EncryptionController {
-    private EncryptionMode encryptionMode;
+    private String mode;
     private String key;
     private String message;
     private String pathToWrite;
@@ -16,12 +16,28 @@ public class EncryptionController {
     private StringBuffer buffer;
     private static final String ABC = "abcdefghijklmnopqrstuvwxyz";
 
-    public String encryptOrDecrypt(String message, String key, Algorithm algorithm, String mode) throws IOException {
+    public EncryptionController(String mode, String key, String pathToWrite, String pathToRead) {
+        this.mode = mode;
+        this.key = key;
+        this.pathToWrite = pathToWrite;
+        this.pathToRead = pathToRead;
+    }
+
+    public EncryptionController(String mode, String key, String message) {
+        this.mode = mode;
+        this.key = key;
+        this.message = message;
+    }
+
+    public String encryptOrDecrypt(Algorithm algorithm) throws IOException {
         int shift = Integer.parseInt(key);
         String result;
         if (algorithm.equals(Algorithm.SHIFT)) {
-            if (!pathToRead.equals("")) {
+            if (pathToRead != null) {
                 message = readFromFile(pathToRead);
+                if (message.equals("")) {
+                    return "This file is empty or does not exist!";
+                }
                 char[] messageArray = message.toCharArray();
                 if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
                     result = shiftingEncryption(shift, messageArray);
@@ -37,7 +53,7 @@ public class EncryptionController {
                 }
             }
         } else {
-            if (!pathToRead.equals("")) {
+            if (pathToRead != null) {
                 message = readFromFile(pathToRead);
                 char[] messageArray = message.toCharArray();
                 if (mode.equalsIgnoreCase(String.valueOf(EncryptionMode.ENCRYPTION))) {
@@ -54,8 +70,9 @@ public class EncryptionController {
                 }
             }
         }
-        if (!pathToWrite.equals("")) {
+        if (pathToWrite != null) {
             writeToFile(pathToWrite, result);
+            return "Result has been written to file: " + pathToWrite;
         }
         return result;
     }
@@ -79,8 +96,6 @@ public class EncryptionController {
                     stringBuilder.append(scanner.nextLine());
                 }
             }
-        } else {
-            System.out.println("Error, such file does not exist!");
         }
         return stringBuilder.toString();
     }
@@ -136,7 +151,7 @@ public class EncryptionController {
         char[] abcCharsUpperCase = upperAlphabet.toCharArray();
         for (char current : messageArray) {
             if (Character.isAlphabetic(current)) {
-                for (int j = 0; j < ABC.length() * 2 - 1; j++) {
+                for (int j = 0; j < ABC.length(); j++) {
                     if (current == abcCharsLowerCase[j]) {
                         char resultChar = shift > j ? abcCharsLowerCase[ABC.length() - (shift - j)] : abcCharsLowerCase[j - shift];
                         buffer.append(resultChar);
@@ -186,4 +201,9 @@ public class EncryptionController {
         }
         return buffer.toString();
     }
+
+    public void setPathToWrite(String pathToWrite) {
+        this.pathToWrite = pathToWrite;
+    }
+
 }

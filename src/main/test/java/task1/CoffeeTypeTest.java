@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CoffeeTypeTest {
-
     @Test
     public void shouldGetPrice() {
         CoffeeType coffeeType = CoffeeType.LATTE;
@@ -41,6 +40,7 @@ public class CoffeeTypeTest {
         CoffeeType coffeeType = CoffeeType.LATTE;
         assertEquals(1, coffeeType.getCupsAmount());
     }
+
     @Test
     public void shouldFindByAction() {
         assertEquals(CoffeeType.LATTE, CoffeeType.findByAction("2"));

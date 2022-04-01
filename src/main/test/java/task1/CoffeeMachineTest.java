@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CoffeeMachineTest {
-
     @Test
     public void shouldStartWithFill() {
         String userInput = String.format("fill%s100%s100%s100%s100%sexit",
@@ -20,7 +19,6 @@ public class CoffeeMachineTest {
                 System.lineSeparator());
         ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(bais);
-
 
         CoffeeMachine coffeeMachine = new CoffeeMachine();
         coffeeMachine.start();

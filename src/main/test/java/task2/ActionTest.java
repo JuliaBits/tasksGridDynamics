@@ -9,6 +9,7 @@ public class ActionTest {
     public void shouldFindByOption() {
         assertEquals(Action.ADD, Action.findByOption("add"));
     }
+
     @Test
     public void shouldConvertToString() {
         String actions = "add, ask, remove, import, export, hardest card, reset stats, log, exit";
