@@ -3,7 +3,7 @@ package task3;
 
 public class Main {
     public static void main(String[] args) {
-      Record record = new Organization();
+      Record record = new Record();
       record.start();
     }
 }

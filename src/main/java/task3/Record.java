@@ -13,7 +13,8 @@ public class Record {
     private LocalDateTime created;
     private LocalDateTime lastEdit;
     protected final List<Record> records = new ArrayList<>();
-    protected final Scanner sc = new Scanner(System.in);
+    protected static Scanner sc = new Scanner(System.in);
+
 
     private boolean numberValidity(String number) {
         String numberPattern = "^((\\+?\\(?[^\\W_]+\\)?)|(\\+?\\(?[^\\W_]+\\)?(-|\\s)?[^\\W_]{2,})|(\\+?[^\\W_]+(-|\\s)?\\(?[^\\W_]{2,}\\)?))((-|\\s)?[^\\W_]{2,})*";
@@ -114,14 +115,10 @@ public class Record {
     }
 
     public void remove() {
-        if (records.isEmpty()) {
-            System.out.println("No records to remove!");
-        } else {
-            Record recordToRemove = selectRecord();
-            if (recordToRemove != null) {
-                records.remove(recordToRemove);
-                System.out.println("Successfully deleted!");
-            }
+        Record recordToRemove = selectRecord();
+        if (recordToRemove != null) {
+            records.remove(recordToRemove);
+            System.out.println("Successfully deleted!");
         }
     }
 
@@ -180,11 +177,6 @@ public class Record {
     }
 
     public boolean isValidIndex(String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (Exception e) {
-            return false;
-        }
         return Integer.parseInt(input) <= records.size();
     }
 

@@ -29,17 +29,14 @@ public class Organization extends Record {
         System.out.println("Select a field (name, address, number):");
         String fieldToUpdate = sc.nextLine();
         switch (fieldToUpdate) {
-            case "name": {
+            case "name" -> {
                 old.setOrgName();
-                break;
             }
-            case "address": {
+            case "address" -> {
                 old.setAddress();
-                break;
             }
-            case "number": {
+            case "number" -> {
                 old.setNumber();
-                break;
             }
         }
         old.setLastEdit(LocalDateTime.now().withNano(0));
@@ -62,14 +59,6 @@ public class Organization extends Record {
     public void setAddress() {
         System.out.println("Enter address:");
         this.setAddress(sc.nextLine());
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     @Override
